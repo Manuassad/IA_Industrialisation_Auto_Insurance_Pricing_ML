@@ -1,7 +1,7 @@
 # Continuous Integration pipeline for the auto pricing API
 name: CI Pipeline API Tarification
 
-# Trigger workflow on pushes targeting the main branch
+# Trigger workflow on pushes targeting the main branch 
 on:
   push:
     branches: [ main ]
