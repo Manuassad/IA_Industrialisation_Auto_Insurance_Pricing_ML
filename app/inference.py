@@ -4,15 +4,17 @@
 import joblib
 import numpy as np
 import os
-from .processing import process_single_payload
+from app.processing import process_single_payload
+from pathlib import Path
+from typing import Any
 
 # Define paths to locate the models_export directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODELS_DIR = os.path.join(BASE_DIR, 'models_export')
+MODELS_DIR = Path(os.path.join(BASE_DIR, 'models_export'))
 
 # Load preprocessors into memory
-prep_cls = joblib.load(os.path.join(MODELS_DIR, 'prep_cls.joblib'))
-prep_sev = joblib.load(os.path.join(MODELS_DIR, 'prep_sev.joblib'))
+prep_cls = joblib.load(MODELS_DIR / 'prep_cls.joblib')
+prep_sev = joblib.load(MODELS_DIR / 'prep_sev.joblib')
 
 # Load models into memory
 mod_freq_lr = joblib.load(os.path.join(MODELS_DIR, 'mod_freq_lr.joblib'))
@@ -41,7 +43,7 @@ def predict_frequency(payload: dict) -> float:
     return max(0.0, float(freq))
 
 # Function to predict claim severity if a claim occurs
-def predict_amount(payload: dict) -> float:
+def predict_amount(payload: dict[str, Any]) -> float:
     """Predicts claim amount if a claim occurs."""
     df = process_single_payload(payload)
     X_p = prep_sev.transform(df)
