@@ -22,7 +22,7 @@ tags_metadata = [
 ]
 
 app = FastAPI(
-    title="🚗 API Tarification Auto - M2 Fintech",
+    title=" API Tarification Auto - M2 Fintech",
     description="""
     **Production-ready REST API** for auto insurance contract pricing.
     
@@ -130,8 +130,6 @@ def route_predict(contract: ContractInput):
         "premium": max(0.0, float(result["premium"]))
     }
 
-# ==============================================================================
-# ENTRY POINT FOR DIRECT EXECUTION (OPTIONAL)
-# ==============================================================================
+# ENTRY POINT FOR DIRECT EXECUTION 
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
