@@ -35,7 +35,7 @@ jobs:
         
     # Run code check (linting, formatting, or custom check script)
     - name: Code Check
-      run: uv run check
+      run: ty check
         
     # Run the test suite using pytest via uv
     - name: Tests Execution
