@@ -7,7 +7,7 @@ wheels/
 *.egg-info
 
 # Training outputs
-training
+training/
 
 # Virtual environments
 .venv
