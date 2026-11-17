@@ -23,8 +23,13 @@ COPY models_export/ ./models_export/
 RUN chown -R api-user:api-user /home/api-user/projet
 USER api-user
 
-# Expose API listening port
+# Expose API listening port (Render injects its own port through the PORT variable)
+ENV PORT=8000
 EXPOSE 8000
 
-# Command to run the ASGI server
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Container health check on the /health route (used by Docker; Render uses healthCheckPath)
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s \
+    CMD python -c "import os, urllib.request; urllib.request.urlopen(f'http://127.0.0.1:{os.environ[\"PORT\"]}/health')" || exit 1
+
+# Command to run the ASGI server (shell form so that $PORT is expanded)
+CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT}

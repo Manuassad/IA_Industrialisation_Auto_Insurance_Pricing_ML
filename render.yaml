@@ -1,0 +1,13 @@
+# Render Blueprint: infrastructure as code for the cloud deployment of the API
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: api-tarification-auto
+    runtime: docker            # Render builds the image from the Dockerfile at the root
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health   # Render only switches traffic once /health answers 200
+    autoDeployTrigger: checksPass  # deploy main only after the GitHub Actions CI is green
+    envVars:
+      - key: PORT
+        value: "8000"

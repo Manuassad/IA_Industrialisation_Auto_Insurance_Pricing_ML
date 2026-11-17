@@ -1,9 +1,11 @@
 # Continuous Integration pipeline for the auto pricing API
 name: CI Pipeline API Tarification
 
-# Trigger workflow on pushes targeting the main branch 
+# Trigger workflow on pushes targeting the main branch and on pull requests
 on:
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -39,7 +41,7 @@ jobs:
         
     # Run the test suite using pytest via uv
     - name: Tests Execution
-      run: uv run pytest tests/
+      run: uv run pytest tests/ -v
       
     # Verify that the Dockerfile builds successfully
     - name: Docker Build Verification
